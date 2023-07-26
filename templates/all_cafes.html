@@ -1,0 +1,69 @@
+<!--TABLE WITH DETAILED INFORMATION ABOUT EACH CAFE IN THE DB-->
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1581259021841-a16d7c2a777d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="page-heading">
+					<h1>Cafes in Banff</h1>
+                </div>
+                <div class="sub-text">
+                <p>Photo by <a href="https://unsplash.com/@louispaulin">Louis Paulin</a> on
+                  <a href="https://unsplash.com/">Unsplash</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <table>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>🧭 Address</th>
+                <th>🕒 Opening Times</th>
+                <th>📶 WiFi</th>
+                <th>🔌 Sockets</th>
+                <th>⛰️ Views</th>
+            </tr>
+            <!-- calls all Cafes from DB and creates table rows with the info-->
+            {% for cafe in all_cafes %}
+            <tr>
+                <td><a class="cafe-name" href="{{ url_for('show_cafe', cafe_id=cafe.id) }}">{{ cafe.name }}</a></td>
+                <td><a href="{{ cafe.maps_url }}" target="_blank">{{ cafe.location }}</a></td>
+                <td>{{ cafe.open }} - {{ cafe.close }}</td>
+                <td>{% if cafe.wifi == 1: %}
+                    ✔️
+                    {% elif cafe.wifi == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>{% if cafe.sockets == 1:%}
+                    ✔️
+                    {% elif cafe.sockets == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>{% if cafe.mountain_views == 1: %}
+                    ✔️
+                    {% elif cafe.mountain_views == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<hr>
+{% include "footer.html" %}

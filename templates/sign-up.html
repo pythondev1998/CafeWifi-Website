@@ -1,0 +1,54 @@
+<!--USER SIGN-UP-->
+<!--add Bootstrap templates-->
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!--blocks CSS from Bootstrap templates above, so that it uses clean-blog template for Styling-->
+{% block content %}
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1570309465543-17326ed60c76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80')">
+  <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Sign Up</h1>
+            <span class="subheading">Sign up to be able to add Cafes and comment</span>
+          </div>
+          <div class="sub-text">
+            <p>Photo by <a href="https://unsplash.com/@andyjh07">Andy Holmes</a> on
+            <a href="https://unsplash.com/">Unsplash</a></p>
+          </div>
+        </div>
+      </div>
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+         <p class="warning"> DO NOT USE A REAL EMAIL OR PASSWORD. THIS WEBSITE IS A PORTFOLIO ONLY. YOUR DATA IS NOT SAVE.
+         THE DATA IS STORED IN A PUBLIC SPACE TO DEMONSTRATE HOW IT WORKS. DO NOT USE A REAL EMAIL OR PASSWORD.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <p class="flashes">{{ message }}</p>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    </div>
+  </div>
+</div>
+<hr>
+
+{% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,59 @@
+<!--HOMEPAGE SHOWS OVERVIEWS OF ALL CAFES IN THE DB-->
+{% include "header.html" %}
+
+
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1515696955266-4f67e13219e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Coffee, Wifi and Mountain Views</h1>
+            <span class="subheading">The best work and study-friendly Cafes in Banff, AB. <br> <br>
+              Find delicious coffee, snacks and WiFi paired with stunning mountain views. </span>
+          </div>
+          <div class="sub-text">
+            <p>Photo by <a href="https://unsplash.com/@nate_dumlao">Nathan Dumlao</a> on
+              <a href="https://unsplash.com/">Unsplash</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </header>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- creates a card for every Cafe in the DB-->
+      {% for cafe in all_cafes %}
+      <div class="col-lg-4 col-md-6 mx-auto text-left">
+        <div class="card">
+          <div class="card-header">
+            <a href="{{ url_for('show_cafe', cafe_id=cafe.id) }}"> <h5>  {{ cafe.name }} </h5> </a>
+          </div>
+          <div class="class-body">
+            <p class="card-text">🕒{{ cafe.open }} - {{ cafe.close }}</p>
+            <p class="card-text">🧭{{ cafe.location }}</p>
+          </div>
+          <br>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mx-auto text-center">
+         <a class="btn btn-primary" href="{{ url_for('show_all_cafes') }}">Show all Cafes</a>
+      </div>
+      {% if current_user.is_authenticated: %}
+      <div class="col-lg-4 col-md-6 mx-auto text-center">
+         <a class="btn btn-primary" href="{{ url_for('add_cafe') }}">Add Cafe</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+
+<hr>
+
+{% include "footer.html" %}

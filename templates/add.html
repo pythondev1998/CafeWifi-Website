@@ -1,0 +1,38 @@
+<!--ADD A CAFE TO THE DATABASE VIA INPUT IN WTFORM-->
+<!--add Bootstrap templates-->
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+<!--blocks CSS from Bootstrap templates above, so that it uses clean-blog template for Styling-->
+{% block content %}
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1581259021841-a16d7c2a777d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80')">
+  <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>New Cafe</h1>
+            <span class="subheading">Share your favourite Cafe with us!</span>
+          </div>
+          <div class="sub-text">
+            <p>Photo by <a href="https://unsplash.com/@louispaulin">Louis Paulin</a> on
+              <a href="https://unsplash.com/">Unsplash</a></p>
+          </div>
+        </div>
+      </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+          <!-- adds the CafeForm created in forms.py, turns off browser default validation messages-->
+         {{ wtf.quick_form(form, novalidate = True) }}
+    </div>
+  </div>
+</div>
+<hr>
+
+{% include "footer.html" %}
+{% endblock %}

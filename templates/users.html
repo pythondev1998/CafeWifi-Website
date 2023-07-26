@@ -1,0 +1,49 @@
+<!--TABLE WITH OVERVIEW OF USERS-->
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1581259021841-a16d7c2a777d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="page-heading">
+					<h1>Users</h1>
+                </div>
+                <div class="sub-text">
+                <p>Photo by <a href="https://unsplash.com/@louispaulin">Louis Paulin</a> on
+                  <a href="https://unsplash.com/">Unsplash</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+    <table>
+        <tbody>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Reviews</th>
+                <th>Delete</th>
+            </tr>
+            {% for user in all_users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td> <a href="{{ url_for('show_user_reviews', user_id=user.id) }}">Show Reviews</a> </td>
+                {% if user.id != 1: %}
+                <td> <a href="{{ url_for('delete_user', user_id=user.id) }}">✘</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+</div>
+
+<hr>
+{% include "footer.html" %}

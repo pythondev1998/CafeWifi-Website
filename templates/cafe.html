@@ -1,0 +1,142 @@
+<!--SHOW ALL INFORMATION ABOUT THE REQUESTED CAFE-->
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1581259021841-a16d7c2a777d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1157&q=80')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="page-heading">
+					<h1>{{ cafe.name }}</h1>
+                </div>
+                <div class="sub-text">
+                <p>Photo by <a href="https://unsplash.com/@louispaulin">Louis Paulin</a> on
+                <a href="https://unsplash.com/">Unsplash</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <div class="row"><div class="col-lg-8 col-md-10 mx-auto">
+        <table>
+            <tbody>
+            <tr>
+                <td>🧭 Address:</td>
+                <td><a href="{{ cafe.maps_url }}" target="_blank">{{ cafe.location }}</a></td>
+            </tr>
+            <tr>
+                <td>🕒 Opening Times:</td>
+                <td>{{ cafe.open }} - {{ cafe.close }}</td>
+            </tr>
+            <tr>
+                <td>📶 WiFi:</td>
+                <td>{% if cafe.wifi == 1: %}
+                    ✔️
+                    {% elif cafe.wifi == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>🔌 Sockets:</td>
+                <td>{% if cafe.sockets == 1: %}
+                    ✔️
+                    {% elif cafe.sockets == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>⛰️ Views:</td>
+                <td>{% if cafe.mountain_views == 1: %}
+                    ✔️
+                    {% elif cafe.mountain_views == 0: %}
+                    ✖️
+                    {% else: %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        {% if current_user.id == 1: %}
+            <div class="col-lg-4 col-md-4 mx-auto text-center">
+                <a class="btn btn-primary" href="{{ url_for ('update_cafe') }}">Update Cafe</a>
+            </div>
+            <div class="col-lg-4 col-md-4 mx-auto text-center">
+                <a class="btn btn-primary" href="{{url_for('delete_cafe', cafe_id=cafe.id)}}">Delete Cafe</a>
+             </div>
+            <div class="col-lg-4 col-md-4 mx-auto text-center">
+                <a class="btn btn-primary" href="{{ url_for ('show_overview') }}">Back to all Cafes</a>
+            </div>
+        {% elif current_user.is_authenticated: %}
+            <div class="col-lg-6 col-md-6 mx-auto text-center">
+                <a class="btn btn-primary" href="{{ url_for ('update_cafe') }}">Update Cafe</a>
+            </div>
+            <div class="col-lg-6 col-md-6 mx-auto text-center">
+                <a class="btn btn-primary" href="{{ url_for ('show_overview') }}">Back to all Cafes</a>
+            </div>
+        {% else: %}
+            <div class="col-lg-6 col-md-6 mx-auto text-center">
+                <a class="btn btn-primary" href="{{ url_for ('show_overview') }}">Back to all Cafes</a>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <br>
+     <h3> Reviews:</h3>
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {% for review in cafe.reviews: %}
+              <ul class="reviewList">
+                <li>
+                    <div class="reviewText">
+                      <p>{{review.text | safe}}</p>
+                      <span class="sub-text">
+                          {{review.review_author.name}}  |
+                      {{review.date}}
+                      </span>
+                      {% if current_user.id == 1: %}
+                        <a href="{{url_for('delete_review', review_id=review.id) }}">✘</a>
+                      {% endif %}
+                    </div>
+                </li>
+              <hr class="list-inline">
+              </ul>
+          {% endfor %}
+
+        </div>
+    </div>
+    <hr>
+    {% if current_user.is_authenticated: %}
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ ckeditor.load() }}
+            {{ ckeditor.config(name='comment_text') }}
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
+    </div>
+    {% else: %}
+    <p> Please
+        <a href="{{ url_for('login')}}">log in</a> or
+        <a href="{{ url_for('sign_up')}}">sign up</a>
+        to leave a review.</p>
+    {% endif %}
+</div>
+<hr>
+{% include "footer.html" %}
+{% endblock %}
