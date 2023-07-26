@@ -19,9 +19,6 @@ PASSWORD = os.environ["PASSWORD"]
 
 # # only run the first time to create DBs
 
-
-
-
 # ---------------------------- START FLASK FRAMEWORK ------------------------------- #
 app = Flask(__name__)
 Bootstrap(app)
@@ -32,9 +29,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # ---------------------------- CONNECT TO DATABASE ------------------------------- #
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes-banff.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///cafes-banff.db")
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
