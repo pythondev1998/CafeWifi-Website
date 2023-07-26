@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 from datetime import date
 from functools import wraps
 from forms import CafeForm, ReviewForm, SignUpForm, LoginForm, ContactForm
+import psycopg2
 
 """
 #Esto es para lo del correo (NO esta hecho)
@@ -21,15 +22,16 @@ PASSWORD = os.environ["PASSWORD"]
 
 # ---------------------------- START FLASK FRAMEWORK ------------------------------- #
 app = Flask(__name__)
-Bootstrap(app)
-ckeditor = CKEditor(app)
 app.config['SECRET_KEY'] = os.environ["SECRET_KEY"]
+ckeditor = CKEditor(app)
+Bootstrap(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 # ---------------------------- CONNECT TO DATABASE ------------------------------- #
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dbnamecafe_user:AmMwLwTkclMVGOJ25T5RSYaTqGzUy9jY@dpg-cj0m9tc07spl5oqcr3e0-a.oregon-postgres.render.com:5432/dbnamecafe'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
